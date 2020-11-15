@@ -6,7 +6,6 @@ import "./ServiceReceiver.sol";
 
 /**
  * @title ServicePayer
- * @author ERC20 Generator (https://vittominacori.github.io/erc20-generator)
  * @dev Implementation of the ServicePayer
  */
 contract ServicePayer {

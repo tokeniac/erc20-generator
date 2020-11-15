@@ -824,7 +824,6 @@ pragma solidity ^0.7.0;
 
 /**
  * @title ServiceReceiver
- * @author ERC20 Generator (https://vittominacori.github.io/erc20-generator)
  * @dev Implementation of the ServiceReceiver
  */
 contract ServiceReceiver is TokenRecover {
@@ -865,7 +864,6 @@ pragma solidity ^0.7.0;
 
 /**
  * @title ServicePayer
- * @author ERC20 Generator (https://vittominacori.github.io/erc20-generator)
  * @dev Implementation of the ServicePayer
  */
 contract ServicePayer {
@@ -889,7 +887,11 @@ pragma solidity ^0.7.0;
 contract GeneratorCopyright {
 
     string private constant _GENERATOR = "https://vittominacori.github.io/erc20-generator";
-    string private constant _VERSION = "v4.0.0";
+    string private _version;
+
+    constructor (string memory version_) {
+        _version = version_;
+    }
 
     /**
      * @dev Returns the token generator tool.
@@ -901,8 +903,8 @@ contract GeneratorCopyright {
     /**
      * @dev Returns the token generator version.
      */
-    function version() public pure returns (string memory) {
-        return _VERSION;
+    function version() public view returns (string memory) {
+        return _version;
     }
 }
 
@@ -920,7 +922,7 @@ pragma solidity ^0.7.0;
  * @author ERC20 Generator (https://vittominacori.github.io/erc20-generator)
  * @dev Implementation of the SimpleERC20
  */
-contract SimpleERC20 is ERC20, ServicePayer, GeneratorCopyright {
+contract SimpleERC20 is ERC20, ServicePayer, GeneratorCopyright("v4.1.0") {
 
     constructor (
         string memory name,

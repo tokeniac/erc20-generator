@@ -15,6 +15,8 @@ contract('SimpleERC20', function ([owner, recipient, thirdParty]) {
 
   const fee = 0;
 
+  const version = 'v4.1.0';
+
   beforeEach(async function () {
     this.serviceReceiver = await ServiceReceiver.new({ from: owner });
     // not to set any price means it doesn't require any fee
@@ -91,7 +93,7 @@ contract('SimpleERC20', function ([owner, recipient, thirdParty]) {
         this.instance = this.token;
       });
 
-      shouldBehaveLikeGeneratorCopyright();
+      shouldBehaveLikeGeneratorCopyright(version);
     });
   });
 });
