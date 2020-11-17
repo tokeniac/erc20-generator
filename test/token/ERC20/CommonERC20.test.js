@@ -11,7 +11,7 @@ const { shouldBehaveLikeERC20Mintable } = require('./behaviours/ERC20Mintable.be
 const CommonERC20 = artifacts.require('CommonERC20');
 const ServiceReceiver = artifacts.require('ServiceReceiver');
 
-contract('CommonERC20', function ([owner, anotherAccount, recipient, thirdParty]) {
+contract('CommonERC20', function ([owner, other, thirdParty]) {
   const _name = 'CommonERC20';
   const _symbol = 'ERC20';
   const _decimals = new BN(8);
@@ -120,7 +120,7 @@ contract('CommonERC20', function ([owner, anotherAccount, recipient, thirdParty]
     });
 
     context('like a ERC20', function () {
-      shouldBehaveLikeERC20(_name, _symbol, _decimals, [owner, anotherAccount, recipient], _initialSupply);
+      shouldBehaveLikeERC20(_name, _symbol, _decimals, _initialSupply, [owner, other, thirdParty]);
     });
 
     context('like a ERC20Capped', function () {
@@ -128,15 +128,15 @@ contract('CommonERC20', function ([owner, anotherAccount, recipient, thirdParty]
         // NOTE: burning initial supply to test cap
         await this.token.burn(_initialSupply, { from: owner });
       });
-      shouldBehaveLikeERC20Capped(owner, [anotherAccount], _cap);
+      shouldBehaveLikeERC20Capped(_cap, [owner, other]);
     });
 
     context('like a ERC20Mintable', function () {
-      shouldBehaveLikeERC20Mintable(owner, anotherAccount, recipient, _initialSupply);
+      shouldBehaveLikeERC20Mintable(_initialSupply, [owner, thirdParty]);
     });
 
     context('like a ERC20Burnable', function () {
-      shouldBehaveLikeERC20Burnable(owner, _initialSupply, [owner]);
+      shouldBehaveLikeERC20Burnable(_initialSupply, [owner, thirdParty]);
     });
 
     context('like a CommonERC20', function () {
@@ -156,17 +156,17 @@ contract('CommonERC20', function ([owner, anotherAccount, recipient, thirdParty]
 
           function shouldMint (amount) {
             beforeEach(async function () {
-              ({ logs: this.logs } = await this.token.mint(anotherAccount, amount, { from }));
+              ({ logs: this.logs } = await this.token.mint(other, amount, { from }));
             });
 
             it('mints the requested amount', async function () {
-              (await this.token.balanceOf(anotherAccount)).should.be.bignumber.equal(amount);
+              (await this.token.balanceOf(other)).should.be.bignumber.equal(amount);
             });
 
             it('emits a transfer event', async function () {
               expectEvent.inLogs(this.logs, 'Transfer', {
                 from: ZERO_ADDRESS,
-                to: anotherAccount,
+                to: other,
                 value: amount,
               });
             });
@@ -174,11 +174,11 @@ contract('CommonERC20', function ([owner, anotherAccount, recipient, thirdParty]
         });
 
         context('when the sender doesn\'t have minting permission', function () {
-          const from = anotherAccount;
+          const from = other;
 
           it('reverts', async function () {
             await expectRevert(
-              this.token.mint(anotherAccount, amount, { from }),
+              this.token.mint(other, amount, { from }),
               'Ownable: caller is not the owner',
             );
           });
