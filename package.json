@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@saeris/vue-spinners": "^1.0.8",
+    "axios": "^0.21.0",
     "bootstrap-vue": "^2.19.0",
     "vee-validate": "^3.4.5",
     "vue2-smooth-scroll": "^1.5.0",
