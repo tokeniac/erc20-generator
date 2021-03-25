@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20Burnable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 
 import "erc-payable-token/contracts/token/ERC1363/ERC1363.sol";
 
@@ -24,11 +24,10 @@ contract AmazingERC20 is ERC20Mintable, ERC20Burnable, ERC1363, TokenRecover, Se
         uint256 initialBalance,
         address payable feeReceiver
     )
-        ERC1363(name, symbol)
+        ERC20(name, symbol)
         ServicePayer(feeReceiver, "AmazingERC20")
         payable
     {
-        _setupDecimals(decimals);
         _mint(_msgSender(), initialBalance);
     }
 

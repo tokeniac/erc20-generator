@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
@@ -12,7 +12,7 @@ import "../../utils/GeneratorCopyright.sol";
  * @author ERC20 Generator (https://vittominacori.github.io/erc20-generator)
  * @dev Implementation of the SimpleERC20
  */
-contract SimpleERC20 is ERC20, ServicePayer, GeneratorCopyright("v4.6.0") {
+contract SimpleERC20 is ERC20, ServicePayer, GeneratorCopyright("v5.0.0") {
 
     constructor (
         string memory name,

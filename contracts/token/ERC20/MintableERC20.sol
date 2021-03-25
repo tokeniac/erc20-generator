@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20Capped.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
 
 import "./behaviours/ERC20Mintable.sol";
 import "../../service/ServicePayer.sol";
@@ -27,7 +27,6 @@ contract MintableERC20 is ERC20Capped, ERC20Mintable, Ownable, ServicePayer {
         ServicePayer(feeReceiver, "MintableERC20")
         payable
     {
-        _setupDecimals(decimals);
         _mint(_msgSender(), initialBalance);
     }
 
@@ -39,7 +38,7 @@ contract MintableERC20 is ERC20Capped, ERC20Mintable, Ownable, ServicePayer {
      * @param account The address that will receive the minted tokens
      * @param amount The amount of tokens to mint
      */
-    function _mint(address account, uint256 amount) internal override onlyOwner {
+    function _mint(address account, uint256 amount) internal override(ERC20, ERC20Capped) onlyOwner {
         super._mint(account, amount);
     }
 
@@ -50,12 +49,5 @@ contract MintableERC20 is ERC20Capped, ERC20Mintable, Ownable, ServicePayer {
      */
     function _finishMinting() internal override onlyOwner {
         super._finishMinting();
-    }
-
-    /**
-     * @dev See {ERC20-_beforeTokenTransfer}. See {ERC20Capped-_beforeTokenTransfer}.
-     */
-    function _beforeTokenTransfer(address from, address to, uint256 amount) internal override(ERC20, ERC20Capped) {
-        super._beforeTokenTransfer(from, to, amount);
     }
 }

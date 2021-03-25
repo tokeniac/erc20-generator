@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
@@ -25,7 +25,6 @@ contract StandardERC20 is ERC20, ServicePayer {
     {
         require(initialBalance > 0, "StandardERC20: supply cannot be zero");
 
-        _setupDecimals(decimals);
         _mint(_msgSender(), initialBalance);
     }
 }

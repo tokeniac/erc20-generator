@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20Burnable.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20Capped.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
 
 import "erc-payable-token/contracts/token/ERC1363/ERC1363.sol";
 
@@ -27,13 +27,16 @@ contract PowerfulERC20 is ERC20Capped, ERC20Mintable, ERC20Burnable, ERC1363, To
         uint256 initialBalance,
         address payable feeReceiver
     )
-        ERC1363(name, symbol)
+        ERC20(name, symbol)
         ERC20Capped(cap)
         ServicePayer(feeReceiver, "PowerfulERC20")
         payable
     {
-        _setupDecimals(decimals);
         _mint(_msgSender(), initialBalance);
+    }
+
+    function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, ERC1363) returns (bool) {
+        return super.supportsInterface(interfaceId);
     }
 
     /**
@@ -44,7 +47,7 @@ contract PowerfulERC20 is ERC20Capped, ERC20Mintable, ERC20Burnable, ERC1363, To
      * @param account The address that will receive the minted tokens
      * @param amount The amount of tokens to mint
      */
-    function _mint(address account, uint256 amount) internal override onlyMinter {
+    function _mint(address account, uint256 amount) internal override(ERC20, ERC20Capped) onlyMinter {
         super._mint(account, amount);
     }
 
@@ -55,12 +58,5 @@ contract PowerfulERC20 is ERC20Capped, ERC20Mintable, ERC20Burnable, ERC1363, To
      */
     function _finishMinting() internal override onlyOwner {
         super._finishMinting();
-    }
-
-    /**
-     * @dev See {ERC20-_beforeTokenTransfer}. See {ERC20Capped-_beforeTokenTransfer}.
-     */
-    function _beforeTokenTransfer(address from, address to, uint256 amount) internal override(ERC20, ERC20Capped) {
-        super._beforeTokenTransfer(from, to, amount);
     }
 }

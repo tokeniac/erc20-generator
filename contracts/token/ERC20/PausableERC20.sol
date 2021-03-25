@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20Pausable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
 
 import "../../service/ServicePayer.sol";
 
@@ -20,13 +20,12 @@ contract PausableERC20 is ERC20Pausable, Ownable, ServicePayer {
         uint256 initialBalance,
         address payable feeReceiver
     )
-      ERC20(name, symbol)
-      ServicePayer(feeReceiver, "PausableERC20")
-      payable
+        ERC20(name, symbol)
+        ServicePayer(feeReceiver, "PausableERC20")
+        payable
     {
         require(initialBalance > 0, "PausableERC20: supply cannot be zero");
 
-        _setupDecimals(decimals);
         _mint(_msgSender(), initialBalance);
     }
 
