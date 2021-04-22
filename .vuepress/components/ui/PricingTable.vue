@@ -23,6 +23,11 @@
                         {{ t.name }}
                     </b-card-title>
 
+                    <meta itemprop="sku" :content="t.name" />
+                    <div itemprop="brand" itemtype="http://schema.org/Brand" itemscope>
+                        <meta itemprop="name" content="ERC20 Token Generator" />
+                    </div>
+
                     <p class="card-price text-center">
                         <b-badge variant="danger" v-if="t.originalPrice !== t.price">
                             <s>{{ t.originalPrice }} <small>ETH</small></s>
@@ -30,6 +35,8 @@
                         <span itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="align-middle">
                             <span itemprop="price">{{ t.price }}</span>
                             <small class="term" itemprop="priceCurrency">ETH</small>
+                            <link itemprop="url" :href="$withBase(`/create-token/?tokenType=${t.name}`)" />
+                            <meta itemprop="availability" content="InStock" />
                         </span>
                     </p>
 
