@@ -5,7 +5,7 @@
 
 |  File Name  |  SHA-1 Hash  |
 |-------------|--------------|
-| dist/MintableERC20.dist.sol | 6747609d27c4fbf9f0a897818e2639578eb7a487 |
+| dist/MintableERC20.dist.sol | 074979be12b1ea959ec116f604856ae09c960af9 |
 
 
 ### Contracts Description Table
@@ -33,22 +33,12 @@
 | └ | approve | External ❗️ | 🛑  |NO❗️ |
 | └ | transferFrom | External ❗️ | 🛑  |NO❗️ |
 ||||||
-| **SafeMath** | Library |  |||
-| └ | tryAdd | Internal 🔒 |   | |
-| └ | trySub | Internal 🔒 |   | |
-| └ | tryMul | Internal 🔒 |   | |
-| └ | tryDiv | Internal 🔒 |   | |
-| └ | tryMod | Internal 🔒 |   | |
-| └ | add | Internal 🔒 |   | |
-| └ | sub | Internal 🔒 |   | |
-| └ | mul | Internal 🔒 |   | |
-| └ | div | Internal 🔒 |   | |
-| └ | mod | Internal 🔒 |   | |
-| └ | sub | Internal 🔒 |   | |
-| └ | div | Internal 🔒 |   | |
-| └ | mod | Internal 🔒 |   | |
+| **IERC20Metadata** | Interface | IERC20 |||
+| └ | name | External ❗️ |   |NO❗️ |
+| └ | symbol | External ❗️ |   |NO❗️ |
+| └ | decimals | External ❗️ |   |NO❗️ |
 ||||||
-| **ERC20** | Implementation | Context, IERC20 |||
+| **ERC20** | Implementation | Context, IERC20, IERC20Metadata |||
 | └ | <Constructor> | Public ❗️ | 🛑  |NO❗️ |
 | └ | name | Public ❗️ |   |NO❗️ |
 | └ | symbol | Public ❗️ |   |NO❗️ |
@@ -65,18 +55,21 @@
 | └ | _mint | Internal 🔒 | 🛑  | |
 | └ | _burn | Internal 🔒 | 🛑  | |
 | └ | _approve | Internal 🔒 | 🛑  | |
-| └ | _setupDecimals | Internal 🔒 | 🛑  | |
 | └ | _beforeTokenTransfer | Internal 🔒 | 🛑  | |
 ||||||
 | **ERC20Capped** | Implementation | ERC20 |||
 | └ | <Constructor> | Public ❗️ | 🛑  |NO❗️ |
 | └ | cap | Public ❗️ |   |NO❗️ |
-| └ | _beforeTokenTransfer | Internal 🔒 | 🛑  | |
+| └ | _mint | Internal 🔒 | 🛑  | |
+||||||
+| **ERC20Decimals** | Implementation | ERC20 |||
+| └ | <Constructor> | Public ❗️ | 🛑  |NO❗️ |
+| └ | decimals | Public ❗️ |   |NO❗️ |
 ||||||
 | **ERC20Mintable** | Implementation | ERC20 |||
-| └ | mintingFinished | Public ❗️ |   |NO❗️ |
-| └ | mint | Public ❗️ | 🛑  | canMint |
-| └ | finishMinting | Public ❗️ | 🛑  | canMint |
+| └ | mintingFinished | External ❗️ |   |NO❗️ |
+| └ | mint | External ❗️ | 🛑  | canMint |
+| └ | finishMinting | External ❗️ | 🛑  | canMint |
 | └ | _finishMinting | Internal 🔒 | 🛑  | |
 ||||||
 | **IPayable** | Interface |  |||
@@ -85,11 +78,11 @@
 | **ServicePayer** | Implementation |  |||
 | └ | <Constructor> | Public ❗️ |  💵 |NO❗️ |
 ||||||
-| **MintableERC20** | Implementation | ERC20Capped, ERC20Mintable, Ownable, ServicePayer |||
-| └ | <Constructor> | Public ❗️ |  💵 | ERC20 ERC20Capped ServicePayer |
+| **MintableERC20** | Implementation | ERC20Decimals, ERC20Capped, ERC20Mintable, Ownable, ServicePayer |||
+| └ | <Constructor> | Public ❗️ |  💵 | ERC20 ERC20Decimals ERC20Capped ServicePayer |
+| └ | decimals | Public ❗️ |   |NO❗️ |
 | └ | _mint | Internal 🔒 | 🛑  | onlyOwner |
 | └ | _finishMinting | Internal 🔒 | 🛑  | onlyOwner |
-| └ | _beforeTokenTransfer | Internal 🔒 | 🛑  | |
 
 
 ### Legend

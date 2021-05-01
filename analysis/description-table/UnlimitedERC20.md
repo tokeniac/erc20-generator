@@ -5,7 +5,7 @@
 
 |  File Name  |  SHA-1 Hash  |
 |-------------|--------------|
-| dist/UnlimitedERC20.dist.sol | 16723249d27742520cde99e1a718a5a35965e88f |
+| dist/UnlimitedERC20.dist.sol | eb7a02e3fd1591ca66a00c9c4d35a8f423df33e8 |
 
 
 ### Contracts Description Table
@@ -33,22 +33,12 @@
 | └ | approve | External ❗️ | 🛑  |NO❗️ |
 | └ | transferFrom | External ❗️ | 🛑  |NO❗️ |
 ||||||
-| **SafeMath** | Library |  |||
-| └ | tryAdd | Internal 🔒 |   | |
-| └ | trySub | Internal 🔒 |   | |
-| └ | tryMul | Internal 🔒 |   | |
-| └ | tryDiv | Internal 🔒 |   | |
-| └ | tryMod | Internal 🔒 |   | |
-| └ | add | Internal 🔒 |   | |
-| └ | sub | Internal 🔒 |   | |
-| └ | mul | Internal 🔒 |   | |
-| └ | div | Internal 🔒 |   | |
-| └ | mod | Internal 🔒 |   | |
-| └ | sub | Internal 🔒 |   | |
-| └ | div | Internal 🔒 |   | |
-| └ | mod | Internal 🔒 |   | |
+| **IERC20Metadata** | Interface | IERC20 |||
+| └ | name | External ❗️ |   |NO❗️ |
+| └ | symbol | External ❗️ |   |NO❗️ |
+| └ | decimals | External ❗️ |   |NO❗️ |
 ||||||
-| **ERC20** | Implementation | Context, IERC20 |||
+| **ERC20** | Implementation | Context, IERC20, IERC20Metadata |||
 | └ | <Constructor> | Public ❗️ | 🛑  |NO❗️ |
 | └ | name | Public ❗️ |   |NO❗️ |
 | └ | symbol | Public ❗️ |   |NO❗️ |
@@ -65,61 +55,47 @@
 | └ | _mint | Internal 🔒 | 🛑  | |
 | └ | _burn | Internal 🔒 | 🛑  | |
 | └ | _approve | Internal 🔒 | 🛑  | |
-| └ | _setupDecimals | Internal 🔒 | 🛑  | |
 | └ | _beforeTokenTransfer | Internal 🔒 | 🛑  | |
 ||||||
 | **ERC20Burnable** | Implementation | Context, ERC20 |||
 | └ | burn | Public ❗️ | 🛑  |NO❗️ |
 | └ | burnFrom | Public ❗️ | 🛑  |NO❗️ |
 ||||||
+| **ERC20Decimals** | Implementation | ERC20 |||
+| └ | <Constructor> | Public ❗️ | 🛑  |NO❗️ |
+| └ | decimals | Public ❗️ |   |NO❗️ |
+||||||
 | **ERC20Mintable** | Implementation | ERC20 |||
-| └ | mintingFinished | Public ❗️ |   |NO❗️ |
-| └ | mint | Public ❗️ | 🛑  | canMint |
-| └ | finishMinting | Public ❗️ | 🛑  | canMint |
+| └ | mintingFinished | External ❗️ |   |NO❗️ |
+| └ | mint | External ❗️ | 🛑  | canMint |
+| └ | finishMinting | External ❗️ | 🛑  | canMint |
 | └ | _finishMinting | Internal 🔒 | 🛑  | |
 ||||||
-| **EnumerableSet** | Library |  |||
-| └ | _add | Private 🔐 | 🛑  | |
-| └ | _remove | Private 🔐 | 🛑  | |
-| └ | _contains | Private 🔐 |   | |
-| └ | _length | Private 🔐 |   | |
-| └ | _at | Private 🔐 |   | |
-| └ | add | Internal 🔒 | 🛑  | |
-| └ | remove | Internal 🔒 | 🛑  | |
-| └ | contains | Internal 🔒 |   | |
-| └ | length | Internal 🔒 |   | |
-| └ | at | Internal 🔒 |   | |
-| └ | add | Internal 🔒 | 🛑  | |
-| └ | remove | Internal 🔒 | 🛑  | |
-| └ | contains | Internal 🔒 |   | |
-| └ | length | Internal 🔒 |   | |
-| └ | at | Internal 🔒 |   | |
-| └ | add | Internal 🔒 | 🛑  | |
-| └ | remove | Internal 🔒 | 🛑  | |
-| └ | contains | Internal 🔒 |   | |
-| └ | length | Internal 🔒 |   | |
-| └ | at | Internal 🔒 |   | |
+| **Strings** | Library |  |||
+| └ | toString | Internal 🔒 |   | |
+| └ | toHexString | Internal 🔒 |   | |
+| └ | toHexString | Internal 🔒 |   | |
 ||||||
-| **Address** | Library |  |||
-| └ | isContract | Internal 🔒 |   | |
-| └ | sendValue | Internal 🔒 | 🛑  | |
-| └ | functionCall | Internal 🔒 | 🛑  | |
-| └ | functionCall | Internal 🔒 | 🛑  | |
-| └ | functionCallWithValue | Internal 🔒 | 🛑  | |
-| └ | functionCallWithValue | Internal 🔒 | 🛑  | |
-| └ | functionStaticCall | Internal 🔒 |   | |
-| └ | functionStaticCall | Internal 🔒 |   | |
-| └ | functionDelegateCall | Internal 🔒 | 🛑  | |
-| └ | functionDelegateCall | Internal 🔒 | 🛑  | |
-| └ | _verifyCallResult | Private 🔐 |   | |
+| **IERC165** | Interface |  |||
+| └ | supportsInterface | External ❗️ |   |NO❗️ |
 ||||||
-| **AccessControl** | Implementation | Context |||
+| **ERC165** | Implementation | IERC165 |||
+| └ | supportsInterface | Public ❗️ |   |NO❗️ |
+||||||
+| **IAccessControl** | Interface |  |||
+| └ | hasRole | External ❗️ |   |NO❗️ |
+| └ | getRoleAdmin | External ❗️ |   |NO❗️ |
+| └ | grantRole | External ❗️ | 🛑  |NO❗️ |
+| └ | revokeRole | External ❗️ | 🛑  |NO❗️ |
+| └ | renounceRole | External ❗️ | 🛑  |NO❗️ |
+||||||
+| **AccessControl** | Implementation | Context, IAccessControl, ERC165 |||
+| └ | supportsInterface | Public ❗️ |   |NO❗️ |
 | └ | hasRole | Public ❗️ |   |NO❗️ |
-| └ | getRoleMemberCount | Public ❗️ |   |NO❗️ |
-| └ | getRoleMember | Public ❗️ |   |NO❗️ |
+| └ | _checkRole | Internal 🔒 |   | |
 | └ | getRoleAdmin | Public ❗️ |   |NO❗️ |
-| └ | grantRole | Public ❗️ | 🛑  |NO❗️ |
-| └ | revokeRole | Public ❗️ | 🛑  |NO❗️ |
+| └ | grantRole | Public ❗️ | 🛑  | onlyRole |
+| └ | revokeRole | Public ❗️ | 🛑  | onlyRole |
 | └ | renounceRole | Public ❗️ | 🛑  |NO❗️ |
 | └ | _setupRole | Internal 🔒 | 🛑  | |
 | └ | _setRoleAdmin | Internal 🔒 | 🛑  | |
@@ -135,8 +111,9 @@
 | **ServicePayer** | Implementation |  |||
 | └ | <Constructor> | Public ❗️ |  💵 |NO❗️ |
 ||||||
-| **UnlimitedERC20** | Implementation | ERC20Mintable, ERC20Burnable, Ownable, Roles, ServicePayer |||
-| └ | <Constructor> | Public ❗️ |  💵 | ERC20 ServicePayer |
+| **UnlimitedERC20** | Implementation | ERC20Decimals, ERC20Mintable, ERC20Burnable, Ownable, Roles, ServicePayer |||
+| └ | <Constructor> | Public ❗️ |  💵 | ERC20 ERC20Decimals ServicePayer |
+| └ | decimals | Public ❗️ |   |NO❗️ |
 | └ | _mint | Internal 🔒 | 🛑  | onlyMinter |
 | └ | _finishMinting | Internal 🔒 | 🛑  | onlyOwner |
 

@@ -1,37 +1,10 @@
 // SPDX-License-Identifier: MIT
 
-// File: @openzeppelin/contracts/utils/Context.sol
-
-
-
-pragma solidity >=0.6.0 <0.8.0;
-
-/*
- * @dev Provides information about the current execution context, including the
- * sender of the transaction and its data. While these are generally available
- * via msg.sender and msg.data, they should not be accessed in such a direct
- * manner, since when dealing with GSN meta-transactions the account sending and
- * paying for execution may not be the actual sender (as far as an application
- * is concerned).
- *
- * This contract is only required for intermediate, library-like contracts.
- */
-abstract contract Context {
-    function _msgSender() internal view virtual returns (address payable) {
-        return msg.sender;
-    }
-
-    function _msgData() internal view virtual returns (bytes memory) {
-        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
-        return msg.data;
-    }
-}
-
 // File: @openzeppelin/contracts/token/ERC20/IERC20.sol
 
 
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP.
@@ -107,220 +80,59 @@ interface IERC20 {
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
-// File: @openzeppelin/contracts/math/SafeMath.sol
+// File: @openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol
 
 
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
+
 
 /**
- * @dev Wrappers over Solidity's arithmetic operations with added overflow
- * checks.
+ * @dev Interface for the optional metadata functions from the ERC20 standard.
  *
- * Arithmetic operations in Solidity wrap on overflow. This can easily result
- * in bugs, because programmers usually assume that an overflow raises an
- * error, which is the standard behavior in high level programming languages.
- * `SafeMath` restores this intuition by reverting the transaction when an
- * operation overflows.
- *
- * Using this library instead of the unchecked operations eliminates an entire
- * class of bugs, so it's recommended to use it always.
+ * _Available since v4.1._
  */
-library SafeMath {
+interface IERC20Metadata is IERC20 {
     /**
-     * @dev Returns the addition of two unsigned integers, with an overflow flag.
-     *
-     * _Available since v3.4._
+     * @dev Returns the name of the token.
      */
-    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {
-        uint256 c = a + b;
-        if (c < a) return (false, 0);
-        return (true, c);
-    }
+    function name() external view returns (string memory);
 
     /**
-     * @dev Returns the substraction of two unsigned integers, with an overflow flag.
-     *
-     * _Available since v3.4._
+     * @dev Returns the symbol of the token.
      */
-    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {
-        if (b > a) return (false, 0);
-        return (true, a - b);
-    }
+    function symbol() external view returns (string memory);
 
     /**
-     * @dev Returns the multiplication of two unsigned integers, with an overflow flag.
-     *
-     * _Available since v3.4._
+     * @dev Returns the decimals places of the token.
      */
-    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {
-        // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
-        // benefit is lost if 'b' is also tested.
-        // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522
-        if (a == 0) return (true, 0);
-        uint256 c = a * b;
-        if (c / a != b) return (false, 0);
-        return (true, c);
+    function decimals() external view returns (uint8);
+}
+
+// File: @openzeppelin/contracts/utils/Context.sol
+
+
+
+pragma solidity ^0.8.0;
+
+/*
+ * @dev Provides information about the current execution context, including the
+ * sender of the transaction and its data. While these are generally available
+ * via msg.sender and msg.data, they should not be accessed in such a direct
+ * manner, since when dealing with meta-transactions the account sending and
+ * paying for execution may not be the actual sender (as far as an application
+ * is concerned).
+ *
+ * This contract is only required for intermediate, library-like contracts.
+ */
+abstract contract Context {
+    function _msgSender() internal view virtual returns (address) {
+        return msg.sender;
     }
 
-    /**
-     * @dev Returns the division of two unsigned integers, with a division by zero flag.
-     *
-     * _Available since v3.4._
-     */
-    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {
-        if (b == 0) return (false, 0);
-        return (true, a / b);
-    }
-
-    /**
-     * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag.
-     *
-     * _Available since v3.4._
-     */
-    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {
-        if (b == 0) return (false, 0);
-        return (true, a % b);
-    }
-
-    /**
-     * @dev Returns the addition of two unsigned integers, reverting on
-     * overflow.
-     *
-     * Counterpart to Solidity's `+` operator.
-     *
-     * Requirements:
-     *
-     * - Addition cannot overflow.
-     */
-    function add(uint256 a, uint256 b) internal pure returns (uint256) {
-        uint256 c = a + b;
-        require(c >= a, "SafeMath: addition overflow");
-        return c;
-    }
-
-    /**
-     * @dev Returns the subtraction of two unsigned integers, reverting on
-     * overflow (when the result is negative).
-     *
-     * Counterpart to Solidity's `-` operator.
-     *
-     * Requirements:
-     *
-     * - Subtraction cannot overflow.
-     */
-    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-        require(b <= a, "SafeMath: subtraction overflow");
-        return a - b;
-    }
-
-    /**
-     * @dev Returns the multiplication of two unsigned integers, reverting on
-     * overflow.
-     *
-     * Counterpart to Solidity's `*` operator.
-     *
-     * Requirements:
-     *
-     * - Multiplication cannot overflow.
-     */
-    function mul(uint256 a, uint256 b) internal pure returns (uint256) {
-        if (a == 0) return 0;
-        uint256 c = a * b;
-        require(c / a == b, "SafeMath: multiplication overflow");
-        return c;
-    }
-
-    /**
-     * @dev Returns the integer division of two unsigned integers, reverting on
-     * division by zero. The result is rounded towards zero.
-     *
-     * Counterpart to Solidity's `/` operator. Note: this function uses a
-     * `revert` opcode (which leaves remaining gas untouched) while Solidity
-     * uses an invalid opcode to revert (consuming all remaining gas).
-     *
-     * Requirements:
-     *
-     * - The divisor cannot be zero.
-     */
-    function div(uint256 a, uint256 b) internal pure returns (uint256) {
-        require(b > 0, "SafeMath: division by zero");
-        return a / b;
-    }
-
-    /**
-     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
-     * reverting when dividing by zero.
-     *
-     * Counterpart to Solidity's `%` operator. This function uses a `revert`
-     * opcode (which leaves remaining gas untouched) while Solidity uses an
-     * invalid opcode to revert (consuming all remaining gas).
-     *
-     * Requirements:
-     *
-     * - The divisor cannot be zero.
-     */
-    function mod(uint256 a, uint256 b) internal pure returns (uint256) {
-        require(b > 0, "SafeMath: modulo by zero");
-        return a % b;
-    }
-
-    /**
-     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on
-     * overflow (when the result is negative).
-     *
-     * CAUTION: This function is deprecated because it requires allocating memory for the error
-     * message unnecessarily. For custom revert reasons use {trySub}.
-     *
-     * Counterpart to Solidity's `-` operator.
-     *
-     * Requirements:
-     *
-     * - Subtraction cannot overflow.
-     */
-    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
-        require(b <= a, errorMessage);
-        return a - b;
-    }
-
-    /**
-     * @dev Returns the integer division of two unsigned integers, reverting with custom message on
-     * division by zero. The result is rounded towards zero.
-     *
-     * CAUTION: This function is deprecated because it requires allocating memory for the error
-     * message unnecessarily. For custom revert reasons use {tryDiv}.
-     *
-     * Counterpart to Solidity's `/` operator. Note: this function uses a
-     * `revert` opcode (which leaves remaining gas untouched) while Solidity
-     * uses an invalid opcode to revert (consuming all remaining gas).
-     *
-     * Requirements:
-     *
-     * - The divisor cannot be zero.
-     */
-    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
-        require(b > 0, errorMessage);
-        return a / b;
-    }
-
-    /**
-     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
-     * reverting with custom message when dividing by zero.
-     *
-     * CAUTION: This function is deprecated because it requires allocating memory for the error
-     * message unnecessarily. For custom revert reasons use {tryMod}.
-     *
-     * Counterpart to Solidity's `%` operator. This function uses a `revert`
-     * opcode (which leaves remaining gas untouched) while Solidity uses an
-     * invalid opcode to revert (consuming all remaining gas).
-     *
-     * Requirements:
-     *
-     * - The divisor cannot be zero.
-     */
-    function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
-        require(b > 0, errorMessage);
-        return a % b;
+    function _msgData() internal view virtual returns (bytes calldata) {
+        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
+        return msg.data;
     }
 }
 
@@ -328,7 +140,7 @@ library SafeMath {
 
 
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 
 
@@ -357,9 +169,7 @@ pragma solidity ^0.7.0;
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {IERC20-approve}.
  */
-contract ERC20 is Context, IERC20 {
-    using SafeMath for uint256;
-
+contract ERC20 is Context, IERC20, IERC20Metadata {
     mapping (address => uint256) private _balances;
 
     mapping (address => mapping (address => uint256)) private _allowances;
@@ -368,27 +178,25 @@ contract ERC20 is Context, IERC20 {
 
     string private _name;
     string private _symbol;
-    uint8 private _decimals;
 
     /**
-     * @dev Sets the values for {name} and {symbol}, initializes {decimals} with
-     * a default value of 18.
+     * @dev Sets the values for {name} and {symbol}.
      *
-     * To select a different value for {decimals}, use {_setupDecimals}.
+     * The defaut value of {decimals} is 18. To select a different value for
+     * {decimals} you should overload it.
      *
-     * All three of these values are immutable: they can only be set once during
+     * All two of these values are immutable: they can only be set once during
      * construction.
      */
     constructor (string memory name_, string memory symbol_) {
         _name = name_;
         _symbol = symbol_;
-        _decimals = 18;
     }
 
     /**
      * @dev Returns the name of the token.
      */
-    function name() public view virtual returns (string memory) {
+    function name() public view virtual override returns (string memory) {
         return _name;
     }
 
@@ -396,7 +204,7 @@ contract ERC20 is Context, IERC20 {
      * @dev Returns the symbol of the token, usually a shorter version of the
      * name.
      */
-    function symbol() public view virtual returns (string memory) {
+    function symbol() public view virtual override returns (string memory) {
         return _symbol;
     }
 
@@ -406,15 +214,15 @@ contract ERC20 is Context, IERC20 {
      * be displayed to a user as `5,05` (`505 / 10 ** 2`).
      *
      * Tokens usually opt for a value of 18, imitating the relationship between
-     * Ether and Wei. This is the value {ERC20} uses, unless {_setupDecimals} is
-     * called.
+     * Ether and Wei. This is the value {ERC20} uses, unless this function is
+     * overridden;
      *
      * NOTE: This information is only used for _display_ purposes: it in
      * no way affects any of the arithmetic of the contract, including
      * {IERC20-balanceOf} and {IERC20-transfer}.
      */
-    function decimals() public view virtual returns (uint8) {
-        return _decimals;
+    function decimals() public view virtual override returns (uint8) {
+        return 18;
     }
 
     /**
@@ -478,7 +286,11 @@ contract ERC20 is Context, IERC20 {
      */
     function transferFrom(address sender, address recipient, uint256 amount) public virtual override returns (bool) {
         _transfer(sender, recipient, amount);
-        _approve(sender, _msgSender(), _allowances[sender][_msgSender()].sub(amount, "ERC20: transfer amount exceeds allowance"));
+
+        uint256 currentAllowance = _allowances[sender][_msgSender()];
+        require(currentAllowance >= amount, "ERC20: transfer amount exceeds allowance");
+        _approve(sender, _msgSender(), currentAllowance - amount);
+
         return true;
     }
 
@@ -495,7 +307,7 @@ contract ERC20 is Context, IERC20 {
      * - `spender` cannot be the zero address.
      */
     function increaseAllowance(address spender, uint256 addedValue) public virtual returns (bool) {
-        _approve(_msgSender(), spender, _allowances[_msgSender()][spender].add(addedValue));
+        _approve(_msgSender(), spender, _allowances[_msgSender()][spender] + addedValue);
         return true;
     }
 
@@ -514,7 +326,10 @@ contract ERC20 is Context, IERC20 {
      * `subtractedValue`.
      */
     function decreaseAllowance(address spender, uint256 subtractedValue) public virtual returns (bool) {
-        _approve(_msgSender(), spender, _allowances[_msgSender()][spender].sub(subtractedValue, "ERC20: decreased allowance below zero"));
+        uint256 currentAllowance = _allowances[_msgSender()][spender];
+        require(currentAllowance >= subtractedValue, "ERC20: decreased allowance below zero");
+        _approve(_msgSender(), spender, currentAllowance - subtractedValue);
+
         return true;
     }
 
@@ -538,8 +353,11 @@ contract ERC20 is Context, IERC20 {
 
         _beforeTokenTransfer(sender, recipient, amount);
 
-        _balances[sender] = _balances[sender].sub(amount, "ERC20: transfer amount exceeds balance");
-        _balances[recipient] = _balances[recipient].add(amount);
+        uint256 senderBalance = _balances[sender];
+        require(senderBalance >= amount, "ERC20: transfer amount exceeds balance");
+        _balances[sender] = senderBalance - amount;
+        _balances[recipient] += amount;
+
         emit Transfer(sender, recipient, amount);
     }
 
@@ -557,8 +375,8 @@ contract ERC20 is Context, IERC20 {
 
         _beforeTokenTransfer(address(0), account, amount);
 
-        _totalSupply = _totalSupply.add(amount);
-        _balances[account] = _balances[account].add(amount);
+        _totalSupply += amount;
+        _balances[account] += amount;
         emit Transfer(address(0), account, amount);
     }
 
@@ -578,8 +396,11 @@ contract ERC20 is Context, IERC20 {
 
         _beforeTokenTransfer(account, address(0), amount);
 
-        _balances[account] = _balances[account].sub(amount, "ERC20: burn amount exceeds balance");
-        _totalSupply = _totalSupply.sub(amount);
+        uint256 accountBalance = _balances[account];
+        require(accountBalance >= amount, "ERC20: burn amount exceeds balance");
+        _balances[account] = accountBalance - amount;
+        _totalSupply -= amount;
+
         emit Transfer(account, address(0), amount);
     }
 
@@ -605,17 +426,6 @@ contract ERC20 is Context, IERC20 {
     }
 
     /**
-     * @dev Sets {decimals} to a value other than the default one of 18.
-     *
-     * WARNING: This function should only be called from the constructor. Most
-     * applications that interact with token contracts will not expect
-     * {decimals} to ever change, and may work incorrectly if it does.
-     */
-    function _setupDecimals(uint8 decimals_) internal virtual {
-        _decimals = decimals_;
-    }
-
-    /**
      * @dev Hook that is called before any transfer of tokens. This includes
      * minting and burning.
      *
@@ -632,11 +442,11 @@ contract ERC20 is Context, IERC20 {
     function _beforeTokenTransfer(address from, address to, uint256 amount) internal virtual { }
 }
 
-// File: @openzeppelin/contracts/token/ERC20/ERC20Burnable.sol
+// File: @openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol
 
 
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 
 
@@ -646,8 +456,6 @@ pragma solidity ^0.7.0;
  * recognized off-chain (via event analysis).
  */
 abstract contract ERC20Burnable is Context, ERC20 {
-    using SafeMath for uint256;
-
     /**
      * @dev Destroys `amount` tokens from the caller.
      *
@@ -669,204 +477,18 @@ abstract contract ERC20Burnable is Context, ERC20 {
      * `amount`.
      */
     function burnFrom(address account, uint256 amount) public virtual {
-        uint256 decreasedAllowance = allowance(account, _msgSender()).sub(amount, "ERC20: burn amount exceeds allowance");
-
-        _approve(account, _msgSender(), decreasedAllowance);
+        uint256 currentAllowance = allowance(account, _msgSender());
+        require(currentAllowance >= amount, "ERC20: burn amount exceeds allowance");
+        _approve(account, _msgSender(), currentAllowance - amount);
         _burn(account, amount);
     }
-}
-
-// File: @openzeppelin/contracts/introspection/IERC165.sol
-
-
-
-pragma solidity ^0.7.0;
-
-/**
- * @dev Interface of the ERC165 standard, as defined in the
- * https://eips.ethereum.org/EIPS/eip-165[EIP].
- *
- * Implementers can declare support of contract interfaces, which can then be
- * queried by others ({ERC165Checker}).
- *
- * For an implementation, see {ERC165}.
- */
-interface IERC165 {
-    /**
-     * @dev Returns true if this contract implements the interface defined by
-     * `interfaceId`. See the corresponding
-     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]
-     * to learn more about how these ids are created.
-     *
-     * This function call must use less than 30 000 gas.
-     */
-    function supportsInterface(bytes4 interfaceId) external view returns (bool);
-}
-
-// File: erc-payable-token/contracts/token/ERC1363/IERC1363.sol
-
-
-
-pragma solidity ^0.7.0;
-
-
-
-/**
- * @title IERC1363 Interface
- * @dev Interface for a Payable Token contract as defined in
- *  https://eips.ethereum.org/EIPS/eip-1363
- */
-interface IERC1363 is IERC20, IERC165 {
-    /*
-     * Note: the ERC-165 identifier for this interface is 0x4bbee2df.
-     * 0x4bbee2df ===
-     *   bytes4(keccak256('transferAndCall(address,uint256)')) ^
-     *   bytes4(keccak256('transferAndCall(address,uint256,bytes)')) ^
-     *   bytes4(keccak256('transferFromAndCall(address,address,uint256)')) ^
-     *   bytes4(keccak256('transferFromAndCall(address,address,uint256,bytes)'))
-     */
-
-    /*
-     * Note: the ERC-165 identifier for this interface is 0xfb9ec8ce.
-     * 0xfb9ec8ce ===
-     *   bytes4(keccak256('approveAndCall(address,uint256)')) ^
-     *   bytes4(keccak256('approveAndCall(address,uint256,bytes)'))
-     */
-
-    /**
-     * @notice Transfer tokens from `msg.sender` to another address and then call `onTransferReceived` on receiver
-     * @param recipient address The address which you want to transfer to
-     * @param amount uint256 The amount of tokens to be transferred
-     * @return true unless throwing
-     */
-    function transferAndCall(address recipient, uint256 amount) external returns (bool);
-
-    /**
-     * @notice Transfer tokens from `msg.sender` to another address and then call `onTransferReceived` on receiver
-     * @param recipient address The address which you want to transfer to
-     * @param amount uint256 The amount of tokens to be transferred
-     * @param data bytes Additional data with no specified format, sent in call to `recipient`
-     * @return true unless throwing
-     */
-    function transferAndCall(address recipient, uint256 amount, bytes calldata data) external returns (bool);
-
-    /**
-     * @notice Transfer tokens from one address to another and then call `onTransferReceived` on receiver
-     * @param sender address The address which you want to send tokens from
-     * @param recipient address The address which you want to transfer to
-     * @param amount uint256 The amount of tokens to be transferred
-     * @return true unless throwing
-     */
-    function transferFromAndCall(address sender, address recipient, uint256 amount) external returns (bool);
-
-    /**
-     * @notice Transfer tokens from one address to another and then call `onTransferReceived` on receiver
-     * @param sender address The address which you want to send tokens from
-     * @param recipient address The address which you want to transfer to
-     * @param amount uint256 The amount of tokens to be transferred
-     * @param data bytes Additional data with no specified format, sent in call to `recipient`
-     * @return true unless throwing
-     */
-    function transferFromAndCall(address sender, address recipient, uint256 amount, bytes calldata data) external returns (bool);
-
-    /**
-     * @notice Approve the passed address to spend the specified amount of tokens on behalf of msg.sender
-     * and then call `onApprovalReceived` on spender.
-     * Beware that changing an allowance with this method brings the risk that someone may use both the old
-     * and the new allowance by unfortunate transaction ordering. One possible solution to mitigate this
-     * race condition is to first reduce the spender's allowance to 0 and set the desired value afterwards:
-     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
-     * @param spender address The address which will spend the funds
-     * @param amount uint256 The amount of tokens to be spent
-     */
-    function approveAndCall(address spender, uint256 amount) external returns (bool);
-
-    /**
-     * @notice Approve the passed address to spend the specified amount of tokens on behalf of msg.sender
-     * and then call `onApprovalReceived` on spender.
-     * Beware that changing an allowance with this method brings the risk that someone may use both the old
-     * and the new allowance by unfortunate transaction ordering. One possible solution to mitigate this
-     * race condition is to first reduce the spender's allowance to 0 and set the desired value afterwards:
-     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
-     * @param spender address The address which will spend the funds
-     * @param amount uint256 The amount of tokens to be spent
-     * @param data bytes Additional data with no specified format, sent in call to `spender`
-     */
-    function approveAndCall(address spender, uint256 amount, bytes calldata data) external returns (bool);
-}
-
-// File: erc-payable-token/contracts/token/ERC1363/IERC1363Receiver.sol
-
-
-
-pragma solidity ^0.7.0;
-
-/**
- * @title IERC1363Receiver Interface
- * @dev Interface for any contract that wants to support transferAndCall or transferFromAndCall
- *  from ERC1363 token contracts as defined in
- *  https://eips.ethereum.org/EIPS/eip-1363
- */
-interface IERC1363Receiver {
-    /*
-     * Note: the ERC-165 identifier for this interface is 0x88a7ca5c.
-     * 0x88a7ca5c === bytes4(keccak256("onTransferReceived(address,address,uint256,bytes)"))
-     */
-
-    /**
-     * @notice Handle the receipt of ERC1363 tokens
-     * @dev Any ERC1363 smart contract calls this function on the recipient
-     * after a `transfer` or a `transferFrom`. This function MAY throw to revert and reject the
-     * transfer. Return of other than the magic value MUST result in the
-     * transaction being reverted.
-     * Note: the token contract address is always the message sender.
-     * @param operator address The address which called `transferAndCall` or `transferFromAndCall` function
-     * @param sender address The address which are token transferred from
-     * @param amount uint256 The amount of tokens transferred
-     * @param data bytes Additional data with no specified format
-     * @return `bytes4(keccak256("onTransferReceived(address,address,uint256,bytes)"))` unless throwing
-     */
-    function onTransferReceived(address operator, address sender, uint256 amount, bytes calldata data) external returns (bytes4);
-}
-
-// File: erc-payable-token/contracts/token/ERC1363/IERC1363Spender.sol
-
-
-
-pragma solidity ^0.7.0;
-
-/**
- * @title IERC1363Spender Interface
- * @dev Interface for any contract that wants to support approveAndCall
- *  from ERC1363 token contracts as defined in
- *  https://eips.ethereum.org/EIPS/eip-1363
- */
-interface IERC1363Spender {
-    /*
-     * Note: the ERC-165 identifier for this interface is 0x7b04a2d0.
-     * 0x7b04a2d0 === bytes4(keccak256("onApprovalReceived(address,uint256,bytes)"))
-     */
-
-    /**
-     * @notice Handle the approval of ERC1363 tokens
-     * @dev Any ERC1363 smart contract calls this function on the recipient
-     * after an `approve`. This function MAY throw to revert and reject the
-     * approval. Return of other than the magic value MUST result in the
-     * transaction being reverted.
-     * Note: the token contract address is always the message sender.
-     * @param sender address The address which called `approveAndCall` function
-     * @param amount uint256 The amount of tokens to be spent
-     * @param data bytes Additional data with no specified format
-     * @return `bytes4(keccak256("onApprovalReceived(address,uint256,bytes)"))` unless throwing
-     */
-    function onApprovalReceived(address sender, uint256 amount, bytes calldata data) external returns (bytes4);
 }
 
 // File: @openzeppelin/contracts/utils/Address.sol
 
 
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /**
  * @dev Collection of functions related to the address type
@@ -1054,202 +676,204 @@ library Address {
     }
 }
 
-// File: @openzeppelin/contracts/introspection/ERC165Checker.sol
+// File: @openzeppelin/contracts/utils/introspection/IERC165.sol
 
 
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /**
- * @dev Library used to query support of an interface declared via {IERC165}.
+ * @dev Interface of the ERC165 standard, as defined in the
+ * https://eips.ethereum.org/EIPS/eip-165[EIP].
  *
- * Note that these functions return the actual result of the query: they do not
- * `revert` if an interface is not supported. It is up to the caller to decide
- * what to do in these cases.
+ * Implementers can declare support of contract interfaces, which can then be
+ * queried by others ({ERC165Checker}).
+ *
+ * For an implementation, see {ERC165}.
  */
-library ERC165Checker {
-    // As per the EIP-165 spec, no interface should ever match 0xffffffff
-    bytes4 private constant _INTERFACE_ID_INVALID = 0xffffffff;
-
-    /*
-     * bytes4(keccak256('supportsInterface(bytes4)')) == 0x01ffc9a7
-     */
-    bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
-
+interface IERC165 {
     /**
-     * @dev Returns true if `account` supports the {IERC165} interface,
-     */
-    function supportsERC165(address account) internal view returns (bool) {
-        // Any contract that implements ERC165 must explicitly indicate support of
-        // InterfaceId_ERC165 and explicitly indicate non-support of InterfaceId_Invalid
-        return _supportsERC165Interface(account, _INTERFACE_ID_ERC165) &&
-            !_supportsERC165Interface(account, _INTERFACE_ID_INVALID);
-    }
-
-    /**
-     * @dev Returns true if `account` supports the interface defined by
-     * `interfaceId`. Support for {IERC165} itself is queried automatically.
+     * @dev Returns true if this contract implements the interface defined by
+     * `interfaceId`. See the corresponding
+     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]
+     * to learn more about how these ids are created.
      *
-     * See {IERC165-supportsInterface}.
+     * This function call must use less than 30 000 gas.
      */
-    function supportsInterface(address account, bytes4 interfaceId) internal view returns (bool) {
-        // query support of both ERC165 as per the spec and support of _interfaceId
-        return supportsERC165(account) &&
-            _supportsERC165Interface(account, interfaceId);
-    }
-
-    /**
-     * @dev Returns a boolean array where each value corresponds to the
-     * interfaces passed in and whether they're supported or not. This allows
-     * you to batch check interfaces for a contract where your expectation
-     * is that some interfaces may not be supported.
-     *
-     * See {IERC165-supportsInterface}.
-     *
-     * _Available since v3.4._
-     */
-    function getSupportedInterfaces(address account, bytes4[] memory interfaceIds) internal view returns (bool[] memory) {
-        // an array of booleans corresponding to interfaceIds and whether they're supported or not
-        bool[] memory interfaceIdsSupported = new bool[](interfaceIds.length);
-
-        // query support of ERC165 itself
-        if (supportsERC165(account)) {
-            // query support of each interface in interfaceIds
-            for (uint256 i = 0; i < interfaceIds.length; i++) {
-                interfaceIdsSupported[i] = _supportsERC165Interface(account, interfaceIds[i]);
-            }
-        }
-
-        return interfaceIdsSupported;
-    }
-
-    /**
-     * @dev Returns true if `account` supports all the interfaces defined in
-     * `interfaceIds`. Support for {IERC165} itself is queried automatically.
-     *
-     * Batch-querying can lead to gas savings by skipping repeated checks for
-     * {IERC165} support.
-     *
-     * See {IERC165-supportsInterface}.
-     */
-    function supportsAllInterfaces(address account, bytes4[] memory interfaceIds) internal view returns (bool) {
-        // query support of ERC165 itself
-        if (!supportsERC165(account)) {
-            return false;
-        }
-
-        // query support of each interface in _interfaceIds
-        for (uint256 i = 0; i < interfaceIds.length; i++) {
-            if (!_supportsERC165Interface(account, interfaceIds[i])) {
-                return false;
-            }
-        }
-
-        // all interfaces supported
-        return true;
-    }
-
-    /**
-     * @notice Query if a contract implements an interface, does not check ERC165 support
-     * @param account The address of the contract to query for support of an interface
-     * @param interfaceId The interface identifier, as specified in ERC-165
-     * @return true if the contract at account indicates support of the interface with
-     * identifier interfaceId, false otherwise
-     * @dev Assumes that account contains a contract that supports ERC165, otherwise
-     * the behavior of this method is undefined. This precondition can be checked
-     * with {supportsERC165}.
-     * Interface identification is specified in ERC-165.
-     */
-    function _supportsERC165Interface(address account, bytes4 interfaceId) private view returns (bool) {
-        // success determines whether the staticcall succeeded and result determines
-        // whether the contract at account indicates support of _interfaceId
-        (bool success, bool result) = _callERC165SupportsInterface(account, interfaceId);
-
-        return (success && result);
-    }
-
-    /**
-     * @notice Calls the function with selector 0x01ffc9a7 (ERC165) and suppresses throw
-     * @param account The address of the contract to query for support of an interface
-     * @param interfaceId The interface identifier, as specified in ERC-165
-     * @return success true if the STATICCALL succeeded, false otherwise
-     * @return result true if the STATICCALL succeeded and the contract at account
-     * indicates support of the interface with identifier interfaceId, false otherwise
-     */
-    function _callERC165SupportsInterface(address account, bytes4 interfaceId)
-        private
-        view
-        returns (bool, bool)
-    {
-        bytes memory encodedParams = abi.encodeWithSelector(_INTERFACE_ID_ERC165, interfaceId);
-        (bool success, bytes memory result) = account.staticcall{ gas: 30000 }(encodedParams);
-        if (result.length < 32) return (false, false);
-        return (success, abi.decode(result, (bool)));
-    }
+    function supportsInterface(bytes4 interfaceId) external view returns (bool);
 }
 
-// File: @openzeppelin/contracts/introspection/ERC165.sol
+// File: @openzeppelin/contracts/utils/introspection/ERC165.sol
 
 
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 
 /**
  * @dev Implementation of the {IERC165} interface.
  *
- * Contracts may inherit from this and call {_registerInterface} to declare
- * their support of an interface.
+ * Contracts that want to implement ERC165 should inherit from this contract and override {supportsInterface} to check
+ * for the additional interface id that will be supported. For example:
+ *
+ * ```solidity
+ * function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+ *     return interfaceId == type(MyInterface).interfaceId || super.supportsInterface(interfaceId);
+ * }
+ * ```
+ *
+ * Alternatively, {ERC165Storage} provides an easier to use but more expensive implementation.
  */
 abstract contract ERC165 is IERC165 {
-    /*
-     * bytes4(keccak256('supportsInterface(bytes4)')) == 0x01ffc9a7
-     */
-    bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
-
-    /**
-     * @dev Mapping of interface ids to whether or not it's supported.
-     */
-    mapping(bytes4 => bool) private _supportedInterfaces;
-
-    constructor () {
-        // Derived contracts need only register support for their own interfaces,
-        // we register support for ERC165 itself here
-        _registerInterface(_INTERFACE_ID_ERC165);
-    }
-
     /**
      * @dev See {IERC165-supportsInterface}.
-     *
-     * Time complexity O(1), guaranteed to always use less than 30 000 gas.
      */
     function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
-        return _supportedInterfaces[interfaceId];
+        return interfaceId == type(IERC165).interfaceId;
     }
+}
+
+// File: erc-payable-token/contracts/token/ERC1363/IERC1363.sol
+
+
+
+pragma solidity ^0.8.0;
+
+
+
+/**
+ * @title IERC1363 Interface
+ * @dev Interface for a Payable Token contract as defined in
+ *  https://eips.ethereum.org/EIPS/eip-1363
+ */
+interface IERC1363 is IERC20, IERC165 {
 
     /**
-     * @dev Registers the contract as an implementer of the interface defined by
-     * `interfaceId`. Support of the actual ERC165 interface is automatic and
-     * registering its interface id is not required.
-     *
-     * See {IERC165-supportsInterface}.
-     *
-     * Requirements:
-     *
-     * - `interfaceId` cannot be the ERC165 invalid interface (`0xffffffff`).
+     * @notice Transfer tokens from `msg.sender` to another address and then call `onTransferReceived` on receiver
+     * @param recipient address The address which you want to transfer to
+     * @param amount uint256 The amount of tokens to be transferred
+     * @return true unless throwing
      */
-    function _registerInterface(bytes4 interfaceId) internal virtual {
-        require(interfaceId != 0xffffffff, "ERC165: invalid interface id");
-        _supportedInterfaces[interfaceId] = true;
-    }
+    function transferAndCall(address recipient, uint256 amount) external returns (bool);
+
+    /**
+     * @notice Transfer tokens from `msg.sender` to another address and then call `onTransferReceived` on receiver
+     * @param recipient address The address which you want to transfer to
+     * @param amount uint256 The amount of tokens to be transferred
+     * @param data bytes Additional data with no specified format, sent in call to `recipient`
+     * @return true unless throwing
+     */
+    function transferAndCall(address recipient, uint256 amount, bytes calldata data) external returns (bool);
+
+    /**
+     * @notice Transfer tokens from one address to another and then call `onTransferReceived` on receiver
+     * @param sender address The address which you want to send tokens from
+     * @param recipient address The address which you want to transfer to
+     * @param amount uint256 The amount of tokens to be transferred
+     * @return true unless throwing
+     */
+    function transferFromAndCall(address sender, address recipient, uint256 amount) external returns (bool);
+
+    /**
+     * @notice Transfer tokens from one address to another and then call `onTransferReceived` on receiver
+     * @param sender address The address which you want to send tokens from
+     * @param recipient address The address which you want to transfer to
+     * @param amount uint256 The amount of tokens to be transferred
+     * @param data bytes Additional data with no specified format, sent in call to `recipient`
+     * @return true unless throwing
+     */
+    function transferFromAndCall(address sender, address recipient, uint256 amount, bytes calldata data) external returns (bool);
+
+    /**
+     * @notice Approve the passed address to spend the specified amount of tokens on behalf of msg.sender
+     * and then call `onApprovalReceived` on spender.
+     * Beware that changing an allowance with this method brings the risk that someone may use both the old
+     * and the new allowance by unfortunate transaction ordering. One possible solution to mitigate this
+     * race condition is to first reduce the spender's allowance to 0 and set the desired value afterwards:
+     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+     * @param spender address The address which will spend the funds
+     * @param amount uint256 The amount of tokens to be spent
+     */
+    function approveAndCall(address spender, uint256 amount) external returns (bool);
+
+    /**
+     * @notice Approve the passed address to spend the specified amount of tokens on behalf of msg.sender
+     * and then call `onApprovalReceived` on spender.
+     * Beware that changing an allowance with this method brings the risk that someone may use both the old
+     * and the new allowance by unfortunate transaction ordering. One possible solution to mitigate this
+     * race condition is to first reduce the spender's allowance to 0 and set the desired value afterwards:
+     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+     * @param spender address The address which will spend the funds
+     * @param amount uint256 The amount of tokens to be spent
+     * @param data bytes Additional data with no specified format, sent in call to `spender`
+     */
+    function approveAndCall(address spender, uint256 amount, bytes calldata data) external returns (bool);
+}
+
+// File: erc-payable-token/contracts/token/ERC1363/IERC1363Receiver.sol
+
+
+
+pragma solidity ^0.8.0;
+
+/**
+ * @title IERC1363Receiver Interface
+ * @dev Interface for any contract that wants to support transferAndCall or transferFromAndCall
+ *  from ERC1363 token contracts as defined in
+ *  https://eips.ethereum.org/EIPS/eip-1363
+ */
+interface IERC1363Receiver {
+
+    /**
+     * @notice Handle the receipt of ERC1363 tokens
+     * @dev Any ERC1363 smart contract calls this function on the recipient
+     * after a `transfer` or a `transferFrom`. This function MAY throw to revert and reject the
+     * transfer. Return of other than the magic value MUST result in the
+     * transaction being reverted.
+     * Note: the token contract address is always the message sender.
+     * @param operator address The address which called `transferAndCall` or `transferFromAndCall` function
+     * @param sender address The address which are token transferred from
+     * @param amount uint256 The amount of tokens transferred
+     * @param data bytes Additional data with no specified format
+     * @return `bytes4(keccak256("onTransferReceived(address,address,uint256,bytes)"))` unless throwing
+     */
+    function onTransferReceived(address operator, address sender, uint256 amount, bytes calldata data) external returns (bytes4);
+}
+
+// File: erc-payable-token/contracts/token/ERC1363/IERC1363Spender.sol
+
+
+
+pragma solidity ^0.8.0;
+
+/**
+ * @title IERC1363Spender Interface
+ * @dev Interface for any contract that wants to support approveAndCall
+ *  from ERC1363 token contracts as defined in
+ *  https://eips.ethereum.org/EIPS/eip-1363
+ */
+interface IERC1363Spender {
+
+    /**
+     * @notice Handle the approval of ERC1363 tokens
+     * @dev Any ERC1363 smart contract calls this function on the recipient
+     * after an `approve`. This function MAY throw to revert and reject the
+     * approval. Return of other than the magic value MUST result in the
+     * transaction being reverted.
+     * Note: the token contract address is always the message sender.
+     * @param sender address The address which called `approveAndCall` function
+     * @param amount uint256 The amount of tokens to be spent
+     * @param data bytes Additional data with no specified format
+     * @return `bytes4(keccak256("onApprovalReceived(address,uint256,bytes)"))` unless throwing
+     */
+    function onApprovalReceived(address sender, uint256 amount, bytes calldata data) external returns (bytes4);
 }
 
 // File: erc-payable-token/contracts/token/ERC1363/ERC1363.sol
 
 
 
-pragma solidity ^0.7.0;
-
+pragma solidity ^0.8.0;
 
 
 
@@ -1261,43 +885,14 @@ pragma solidity ^0.7.0;
  * @title ERC1363
  * @dev Implementation of an ERC1363 interface
  */
-contract ERC1363 is ERC20, IERC1363, ERC165 {
+abstract contract ERC1363 is ERC20, IERC1363, ERC165 {
     using Address for address;
 
-    /*
-     * Note: the ERC-165 identifier for this interface is 0x4bbee2df.
-     * 0x4bbee2df ===
-     *   bytes4(keccak256('transferAndCall(address,uint256)')) ^
-     *   bytes4(keccak256('transferAndCall(address,uint256,bytes)')) ^
-     *   bytes4(keccak256('transferFromAndCall(address,address,uint256)')) ^
-     *   bytes4(keccak256('transferFromAndCall(address,address,uint256,bytes)'))
-     */
-    bytes4 internal constant _INTERFACE_ID_ERC1363_TRANSFER = 0x4bbee2df;
-
-    /*
-     * Note: the ERC-165 identifier for this interface is 0xfb9ec8ce.
-     * 0xfb9ec8ce ===
-     *   bytes4(keccak256('approveAndCall(address,uint256)')) ^
-     *   bytes4(keccak256('approveAndCall(address,uint256,bytes)'))
-     */
-    bytes4 internal constant _INTERFACE_ID_ERC1363_APPROVE = 0xfb9ec8ce;
-
-    // Equals to `bytes4(keccak256("onTransferReceived(address,address,uint256,bytes)"))`
-    // which can be also obtained as `IERC1363Receiver(0).onTransferReceived.selector`
-    bytes4 private constant _ERC1363_RECEIVED = 0x88a7ca5c;
-
-    // Equals to `bytes4(keccak256("onApprovalReceived(address,uint256,bytes)"))`
-    // which can be also obtained as `IERC1363Spender(0).onApprovalReceived.selector`
-    bytes4 private constant _ERC1363_APPROVED = 0x7b04a2d0;
-
     /**
-     * @param name Name of the token
-     * @param symbol A symbol to be used as ticker
+     * @dev See {IERC165-supportsInterface}.
      */
-    constructor (string memory name, string memory symbol) ERC20(name, symbol) {
-        // register the supported interfaces to conform to ERC1363 via ERC165
-        _registerInterface(_INTERFACE_ID_ERC1363_TRANSFER);
-        _registerInterface(_INTERFACE_ID_ERC1363_APPROVE);
+    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
+        return interfaceId == type(IERC1363).interfaceId || super.supportsInterface(interfaceId);
     }
 
     /**
@@ -1387,7 +982,7 @@ contract ERC1363 is ERC20, IERC1363, ERC165 {
         bytes4 retval = IERC1363Receiver(recipient).onTransferReceived(
             _msgSender(), sender, amount, data
         );
-        return (retval == _ERC1363_RECEIVED);
+        return (retval == IERC1363Receiver(recipient).onTransferReceived.selector);
     }
 
     /**
@@ -1405,7 +1000,7 @@ contract ERC1363 is ERC20, IERC1363, ERC165 {
         bytes4 retval = IERC1363Spender(spender).onApprovalReceived(
             _msgSender(), amount, data
         );
-        return (retval == _ERC1363_APPROVED);
+        return (retval == IERC1363Spender(spender).onApprovalReceived.selector);
     }
 }
 
@@ -1413,7 +1008,7 @@ contract ERC1363 is ERC20, IERC1363, ERC165 {
 
 
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 /**
  * @dev Contract module which provides a basic access control mechanism, where
@@ -1483,13 +1078,13 @@ abstract contract Ownable is Context {
 
 
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 
 
 /**
  * @title TokenRecover
- * @dev Allow to recover any ERC20 sent into the contract for error
+ * @dev Allows owner to recover any ERC20 sent into the contract
  */
 contract TokenRecover is Ownable {
 
@@ -1498,8 +1093,35 @@ contract TokenRecover is Ownable {
      * @param tokenAddress The token contract address
      * @param tokenAmount Number of tokens to be sent
      */
-    function recoverERC20(address tokenAddress, uint256 tokenAmount) public onlyOwner {
+    function recoverERC20(address tokenAddress, uint256 tokenAmount) public virtual onlyOwner {
         IERC20(tokenAddress).transfer(owner(), tokenAmount);
+    }
+}
+
+// File: contracts/token/ERC20/behaviours/ERC20Decimals.sol
+
+
+
+pragma solidity ^0.8.0;
+
+
+/**
+ * @title ERC20Decimals
+ * @dev Implementation of the ERC20Decimals. Extension of {ERC20} that adds decimals storage slot.
+ */
+abstract contract ERC20Decimals is ERC20 {
+    uint8 immutable private _decimals;
+
+    /**
+     * @dev Sets the value of the `decimals`. This value is immutable, it can only be
+     * set once during construction.
+     */
+    constructor (uint8 decimals_) {
+        _decimals = decimals_;
+    }
+
+    function decimals() public view virtual override returns (uint8) {
+        return _decimals;
     }
 }
 
@@ -1507,7 +1129,7 @@ contract TokenRecover is Ownable {
 
 
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 
 /**
@@ -1535,7 +1157,7 @@ abstract contract ERC20Mintable is ERC20 {
     /**
      * @return if minting is finished or not.
      */
-    function mintingFinished() public view returns (bool) {
+    function mintingFinished() external view returns (bool) {
         return _mintingFinished;
     }
 
@@ -1547,7 +1169,7 @@ abstract contract ERC20Mintable is ERC20 {
      * @param account The address that will receive the minted tokens
      * @param amount The amount of tokens to mint
      */
-    function mint(address account, uint256 amount) public canMint {
+    function mint(address account, uint256 amount) external canMint {
         _mint(account, amount);
     }
 
@@ -1556,7 +1178,7 @@ abstract contract ERC20Mintable is ERC20 {
      *
      * WARNING: it allows everyone to finish minting. Access controls MUST be defined in derived contracts.
      */
-    function finishMinting() public canMint {
+    function finishMinting() external canMint {
         _finishMinting();
     }
 
@@ -1574,7 +1196,7 @@ abstract contract ERC20Mintable is ERC20 {
 
 
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 interface IPayable {
     function pay(string memory serviceName) external payable;
@@ -1595,7 +1217,8 @@ abstract contract ServicePayer {
 
 
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
+
 
 
 
@@ -1606,21 +1229,25 @@ pragma solidity ^0.7.0;
  * @title AmazingERC20
  * @dev Implementation of the AmazingERC20
  */
-contract AmazingERC20 is ERC20Mintable, ERC20Burnable, ERC1363, TokenRecover, ServicePayer {
+contract AmazingERC20 is ERC20Decimals, ERC20Mintable, ERC20Burnable, ERC1363, TokenRecover, ServicePayer {
 
     constructor (
-        string memory name,
-        string memory symbol,
-        uint8 decimals,
-        uint256 initialBalance,
-        address payable feeReceiver
+        string memory name_,
+        string memory symbol_,
+        uint8 decimals_,
+        uint256 initialBalance_,
+        address payable feeReceiver_
     )
-        ERC1363(name, symbol)
-        ServicePayer(feeReceiver, "AmazingERC20")
+        ERC20(name_, symbol_)
+        ERC20Decimals(decimals_)
+        ServicePayer(feeReceiver_, "AmazingERC20")
         payable
     {
-        _setupDecimals(decimals);
-        _mint(_msgSender(), initialBalance);
+        _mint(_msgSender(), initialBalance_);
+    }
+
+    function decimals() public view virtual override(ERC20, ERC20Decimals) returns (uint8) {
+        return super.decimals();
     }
 
     /**

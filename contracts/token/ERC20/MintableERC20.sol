@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
 
+import "./behaviours/ERC20Decimals.sol";
 import "./behaviours/ERC20Mintable.sol";
 import "../../service/ServicePayer.sol";
 
@@ -12,22 +13,30 @@ import "../../service/ServicePayer.sol";
  * @title MintableERC20
  * @dev Implementation of the MintableERC20
  */
-contract MintableERC20 is ERC20Capped, ERC20Mintable, Ownable, ServicePayer {
+contract MintableERC20 is ERC20Decimals, ERC20Capped, ERC20Mintable, Ownable, ServicePayer {
 
     constructor (
-        string memory name,
-        string memory symbol,
-        uint8 decimals,
-        uint256 cap,
-        uint256 initialBalance,
-        address payable feeReceiver
+        string memory name_,
+        string memory symbol_,
+        uint8 decimals_,
+        uint256 cap_,
+        uint256 initialBalance_,
+        address payable feeReceiver_
     )
-        ERC20(name, symbol)
-        ERC20Capped(cap)
-        ServicePayer(feeReceiver, "MintableERC20")
+        ERC20(name_, symbol_)
+        ERC20Decimals(decimals_)
+        ERC20Capped(cap_)
+        ServicePayer(feeReceiver_, "MintableERC20")
         payable
     {
-        _mint(_msgSender(), initialBalance);
+        // Immutable variables cannot be read during contract creation time
+        // https://github.com/ethereum/solidity/issues/10463
+        require(initialBalance_ <= cap_, "ERC20Capped: cap exceeded");
+        ERC20._mint(_msgSender(), initialBalance_);
+    }
+
+    function decimals() public view virtual override(ERC20, ERC20Decimals) returns (uint8) {
+        return super.decimals();
     }
 
     /**

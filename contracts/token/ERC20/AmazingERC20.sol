@@ -8,6 +8,7 @@ import "erc-payable-token/contracts/token/ERC1363/ERC1363.sol";
 
 import "eth-token-recover/contracts/TokenRecover.sol";
 
+import "./behaviours/ERC20Decimals.sol";
 import "./behaviours/ERC20Mintable.sol";
 import "../../service/ServicePayer.sol";
 
@@ -15,20 +16,25 @@ import "../../service/ServicePayer.sol";
  * @title AmazingERC20
  * @dev Implementation of the AmazingERC20
  */
-contract AmazingERC20 is ERC20Mintable, ERC20Burnable, ERC1363, TokenRecover, ServicePayer {
+contract AmazingERC20 is ERC20Decimals, ERC20Mintable, ERC20Burnable, ERC1363, TokenRecover, ServicePayer {
 
     constructor (
-        string memory name,
-        string memory symbol,
-        uint8 decimals,
-        uint256 initialBalance,
-        address payable feeReceiver
+        string memory name_,
+        string memory symbol_,
+        uint8 decimals_,
+        uint256 initialBalance_,
+        address payable feeReceiver_
     )
-        ERC20(name, symbol)
-        ServicePayer(feeReceiver, "AmazingERC20")
+        ERC20(name_, symbol_)
+        ERC20Decimals(decimals_)
+        ServicePayer(feeReceiver_, "AmazingERC20")
         payable
     {
-        _mint(_msgSender(), initialBalance);
+        _mint(_msgSender(), initialBalance_);
+    }
+
+    function decimals() public view virtual override(ERC20, ERC20Decimals) returns (uint8) {
+        return super.decimals();
     }
 
     /**

@@ -15,17 +15,17 @@ import "../../utils/GeneratorCopyright.sol";
 contract SimpleERC20 is ERC20, ServicePayer, GeneratorCopyright("v5.0.0") {
 
     constructor (
-        string memory name,
-        string memory symbol,
-        uint256 initialBalance,
-        address payable feeReceiver
+        string memory name_,
+        string memory symbol_,
+        uint256 initialBalance_,
+        address payable feeReceiver_
     )
-        ERC20(name, symbol)
-        ServicePayer(feeReceiver, "SimpleERC20")
+        ERC20(name_, symbol_)
+        ServicePayer(feeReceiver_, "SimpleERC20")
         payable
     {
-        require(initialBalance > 0, "SimpleERC20: supply cannot be zero");
+        require(initialBalance_ > 0, "SimpleERC20: supply cannot be zero");
 
-        _mint(_msgSender(), initialBalance);
+        _mint(_msgSender(), initialBalance_);
     }
 }

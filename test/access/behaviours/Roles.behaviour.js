@@ -34,7 +34,7 @@ function shouldBehaveLikeRoles ([admin, other, thirdParty]) {
       it('non-admin cannot grant role to other accounts', async function () {
         await expectRevert(
           this.contract.grantRole(ROLE, other, { from: thirdParty }),
-          'AccessControl: sender must be an admin to grant',
+          `AccessControl: account ${thirdParty.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
         );
       });
 
@@ -68,7 +68,7 @@ function shouldBehaveLikeRoles ([admin, other, thirdParty]) {
         it('non-admin cannot revoke role', async function () {
           await expectRevert(
             this.contract.revokeRole(ROLE, other, { from: thirdParty }),
-            'AccessControl: sender must be an admin to revoke',
+            `AccessControl: account ${thirdParty.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
           );
         });
 
@@ -112,23 +112,6 @@ function shouldBehaveLikeRoles ([admin, other, thirdParty]) {
           const receipt = await this.contract.renounceRole(ROLE, other, { from: other });
           expectEvent.notEmitted(receipt, 'RoleRevoked');
         });
-      });
-    });
-
-    describe('enumerating', function () {
-      it('role bearers can be enumerated', async function () {
-        await this.contract.grantRole(ROLE, other, { from: admin });
-        await this.contract.grantRole(ROLE, thirdParty, { from: admin });
-
-        const memberCount = await this.contract.getRoleMemberCount(ROLE);
-        memberCount.should.be.bignumber.equal('3'); // two added above plus admin
-
-        const bearers = [];
-        for (let i = 0; i < memberCount; ++i) {
-          bearers.push(await this.contract.getRoleMember(ROLE, i));
-        }
-
-        expect(bearers).to.have.members([admin, other, thirdParty]);
       });
     });
   }

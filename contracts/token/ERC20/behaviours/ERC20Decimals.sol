@@ -9,9 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
  * @dev Implementation of the ERC20Decimals. Extension of {ERC20} that adds decimals storage slot.
  */
 abstract contract ERC20Decimals is ERC20 {
-
     uint8 immutable private _decimals;
-
 
     /**
      * @dev Sets the value of the `decimals`. This value is immutable, it can only be
