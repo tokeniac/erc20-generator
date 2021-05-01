@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
@@ -29,7 +29,7 @@ abstract contract ERC20Mintable is ERC20 {
     /**
      * @return if minting is finished or not.
      */
-    function mintingFinished() public view returns (bool) {
+    function mintingFinished() external view returns (bool) {
         return _mintingFinished;
     }
 
@@ -41,7 +41,7 @@ abstract contract ERC20Mintable is ERC20 {
      * @param account The address that will receive the minted tokens
      * @param amount The amount of tokens to mint
      */
-    function mint(address account, uint256 amount) public canMint {
+    function mint(address account, uint256 amount) external canMint {
         _mint(account, amount);
     }
 
@@ -50,7 +50,7 @@ abstract contract ERC20Mintable is ERC20 {
      *
      * WARNING: it allows everyone to finish minting. Access controls MUST be defined in derived contracts.
      */
-    function finishMinting() public canMint {
+    function finishMinting() external canMint {
         _finishMinting();
     }
 

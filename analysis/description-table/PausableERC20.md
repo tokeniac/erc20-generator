@@ -5,7 +5,7 @@
 
 |  File Name  |  SHA-1 Hash  |
 |-------------|--------------|
-| dist/PausableERC20.dist.sol | cc5f2e92d8782ce9bb09c0cff86f4093b6193766 |
+| dist/PausableERC20.dist.sol | 40578f15498091027d7350fb1d0bcd98b295e45a |
 
 
 ### Contracts Description Table
@@ -33,22 +33,12 @@
 | └ | approve | External ❗️ | 🛑  |NO❗️ |
 | └ | transferFrom | External ❗️ | 🛑  |NO❗️ |
 ||||||
-| **SafeMath** | Library |  |||
-| └ | tryAdd | Internal 🔒 |   | |
-| └ | trySub | Internal 🔒 |   | |
-| └ | tryMul | Internal 🔒 |   | |
-| └ | tryDiv | Internal 🔒 |   | |
-| └ | tryMod | Internal 🔒 |   | |
-| └ | add | Internal 🔒 |   | |
-| └ | sub | Internal 🔒 |   | |
-| └ | mul | Internal 🔒 |   | |
-| └ | div | Internal 🔒 |   | |
-| └ | mod | Internal 🔒 |   | |
-| └ | sub | Internal 🔒 |   | |
-| └ | div | Internal 🔒 |   | |
-| └ | mod | Internal 🔒 |   | |
+| **IERC20Metadata** | Interface | IERC20 |||
+| └ | name | External ❗️ |   |NO❗️ |
+| └ | symbol | External ❗️ |   |NO❗️ |
+| └ | decimals | External ❗️ |   |NO❗️ |
 ||||||
-| **ERC20** | Implementation | Context, IERC20 |||
+| **ERC20** | Implementation | Context, IERC20, IERC20Metadata |||
 | └ | <Constructor> | Public ❗️ | 🛑  |NO❗️ |
 | └ | name | Public ❗️ |   |NO❗️ |
 | └ | symbol | Public ❗️ |   |NO❗️ |
@@ -65,7 +55,6 @@
 | └ | _mint | Internal 🔒 | 🛑  | |
 | └ | _burn | Internal 🔒 | 🛑  | |
 | └ | _approve | Internal 🔒 | 🛑  | |
-| └ | _setupDecimals | Internal 🔒 | 🛑  | |
 | └ | _beforeTokenTransfer | Internal 🔒 | 🛑  | |
 ||||||
 | **Pausable** | Implementation | Context |||
@@ -77,16 +66,22 @@
 | **ERC20Pausable** | Implementation | ERC20, Pausable |||
 | └ | _beforeTokenTransfer | Internal 🔒 | 🛑  | |
 ||||||
+| **ERC20Decimals** | Implementation | ERC20 |||
+| └ | <Constructor> | Public ❗️ | 🛑  |NO❗️ |
+| └ | decimals | Public ❗️ |   |NO❗️ |
+||||||
 | **IPayable** | Interface |  |||
 | └ | pay | External ❗️ |  💵 |NO❗️ |
 ||||||
 | **ServicePayer** | Implementation |  |||
 | └ | <Constructor> | Public ❗️ |  💵 |NO❗️ |
 ||||||
-| **PausableERC20** | Implementation | ERC20Pausable, Ownable, ServicePayer |||
-| └ | <Constructor> | Public ❗️ |  💵 | ERC20 ServicePayer |
+| **PausableERC20** | Implementation | ERC20Decimals, ERC20Pausable, Ownable, ServicePayer |||
+| └ | <Constructor> | Public ❗️ |  💵 | ERC20 ERC20Decimals ServicePayer |
 | └ | pause | External ❗️ | 🛑  | onlyOwner |
 | └ | unpause | External ❗️ | 🛑  | onlyOwner |
+| └ | decimals | Public ❗️ |   |NO❗️ |
+| └ | _beforeTokenTransfer | Internal 🔒 | 🛑  | |
 
 
 ### Legend

@@ -5,7 +5,7 @@
 
 |  File Name  |  SHA-1 Hash  |
 |-------------|--------------|
-| dist/StandardERC20.dist.sol | 7c72ef8871900f61b3b3db124ca3af6d88ed9559 |
+| dist/StandardERC20.dist.sol | 2c356f87dde2de228b7dc48a978eaed27b96ca83 |
 
 
 ### Contracts Description Table
@@ -15,10 +15,6 @@
 |:----------:|:-------------------:|:----------------:|:----------------:|:---------------:|
 |     └      |  **Function Name**  |  **Visibility**  |  **Mutability**  |  **Modifiers**  |
 ||||||
-| **Context** | Implementation |  |||
-| └ | _msgSender | Internal 🔒 |   | |
-| └ | _msgData | Internal 🔒 |   | |
-||||||
 | **IERC20** | Interface |  |||
 | └ | totalSupply | External ❗️ |   |NO❗️ |
 | └ | balanceOf | External ❗️ |   |NO❗️ |
@@ -27,22 +23,16 @@
 | └ | approve | External ❗️ | 🛑  |NO❗️ |
 | └ | transferFrom | External ❗️ | 🛑  |NO❗️ |
 ||||||
-| **SafeMath** | Library |  |||
-| └ | tryAdd | Internal 🔒 |   | |
-| └ | trySub | Internal 🔒 |   | |
-| └ | tryMul | Internal 🔒 |   | |
-| └ | tryDiv | Internal 🔒 |   | |
-| └ | tryMod | Internal 🔒 |   | |
-| └ | add | Internal 🔒 |   | |
-| └ | sub | Internal 🔒 |   | |
-| └ | mul | Internal 🔒 |   | |
-| └ | div | Internal 🔒 |   | |
-| └ | mod | Internal 🔒 |   | |
-| └ | sub | Internal 🔒 |   | |
-| └ | div | Internal 🔒 |   | |
-| └ | mod | Internal 🔒 |   | |
+| **IERC20Metadata** | Interface | IERC20 |||
+| └ | name | External ❗️ |   |NO❗️ |
+| └ | symbol | External ❗️ |   |NO❗️ |
+| └ | decimals | External ❗️ |   |NO❗️ |
 ||||||
-| **ERC20** | Implementation | Context, IERC20 |||
+| **Context** | Implementation |  |||
+| └ | _msgSender | Internal 🔒 |   | |
+| └ | _msgData | Internal 🔒 |   | |
+||||||
+| **ERC20** | Implementation | Context, IERC20, IERC20Metadata |||
 | └ | <Constructor> | Public ❗️ | 🛑  |NO❗️ |
 | └ | name | Public ❗️ |   |NO❗️ |
 | └ | symbol | Public ❗️ |   |NO❗️ |
@@ -59,8 +49,11 @@
 | └ | _mint | Internal 🔒 | 🛑  | |
 | └ | _burn | Internal 🔒 | 🛑  | |
 | └ | _approve | Internal 🔒 | 🛑  | |
-| └ | _setupDecimals | Internal 🔒 | 🛑  | |
 | └ | _beforeTokenTransfer | Internal 🔒 | 🛑  | |
+||||||
+| **ERC20Decimals** | Implementation | ERC20 |||
+| └ | <Constructor> | Public ❗️ | 🛑  |NO❗️ |
+| └ | decimals | Public ❗️ |   |NO❗️ |
 ||||||
 | **IPayable** | Interface |  |||
 | └ | pay | External ❗️ |  💵 |NO❗️ |
@@ -68,8 +61,9 @@
 | **ServicePayer** | Implementation |  |||
 | └ | <Constructor> | Public ❗️ |  💵 |NO❗️ |
 ||||||
-| **StandardERC20** | Implementation | ERC20, ServicePayer |||
-| └ | <Constructor> | Public ❗️ |  💵 | ERC20 ServicePayer |
+| **StandardERC20** | Implementation | ERC20Decimals, ServicePayer |||
+| └ | <Constructor> | Public ❗️ |  💵 | ERC20 ERC20Decimals ServicePayer |
+| └ | decimals | Public ❗️ |   |NO❗️ |
 
 
 ### Legend

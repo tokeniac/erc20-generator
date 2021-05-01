@@ -1,31 +1,34 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-
+import "./behaviours/ERC20Decimals.sol";
 import "../../service/ServicePayer.sol";
 
 /**
  * @title StandardERC20
  * @dev Implementation of the StandardERC20
  */
-contract StandardERC20 is ERC20, ServicePayer {
+contract StandardERC20 is ERC20Decimals, ServicePayer {
 
     constructor (
-        string memory name,
-        string memory symbol,
-        uint8 decimals,
-        uint256 initialBalance,
-        address payable feeReceiver
+        string memory name_,
+        string memory symbol_,
+        uint8 decimals_,
+        uint256 initialBalance_,
+        address payable feeReceiver_
     )
-        ERC20(name, symbol)
-        ServicePayer(feeReceiver, "StandardERC20")
+        ERC20(name_, symbol_)
+        ERC20Decimals(decimals_)
+        ServicePayer(feeReceiver_, "StandardERC20")
         payable
     {
-        require(initialBalance > 0, "StandardERC20: supply cannot be zero");
+        require(initialBalance_ > 0, "StandardERC20: supply cannot be zero");
 
-        _setupDecimals(decimals);
-        _mint(_msgSender(), initialBalance);
+        _mint(_msgSender(), initialBalance_);
+    }
+
+    function decimals() public view virtual override returns (uint8) {
+        return super.decimals();
     }
 }

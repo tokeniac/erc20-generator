@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20Capped.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20Burnable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 
+import "./behaviours/ERC20Decimals.sol";
 import "./behaviours/ERC20Mintable.sol";
 import "../../service/ServicePayer.sol";
 
@@ -13,23 +14,30 @@ import "../../service/ServicePayer.sol";
  * @title CommonERC20
  * @dev Implementation of the CommonERC20
  */
-contract CommonERC20 is ERC20Capped, ERC20Mintable, ERC20Burnable, Ownable, ServicePayer {
+contract CommonERC20 is ERC20Decimals, ERC20Capped, ERC20Mintable, ERC20Burnable, Ownable, ServicePayer {
 
     constructor (
-        string memory name,
-        string memory symbol,
-        uint8 decimals,
-        uint256 cap,
-        uint256 initialBalance,
-        address payable feeReceiver
+        string memory name_,
+        string memory symbol_,
+        uint8 decimals_,
+        uint256 cap_,
+        uint256 initialBalance_,
+        address payable feeReceiver_
     )
-        ERC20(name, symbol)
-        ERC20Capped(cap)
-        ServicePayer(feeReceiver, "CommonERC20")
+        ERC20(name_, symbol_)
+        ERC20Decimals(decimals_)
+        ERC20Capped(cap_)
+        ServicePayer(feeReceiver_, "CommonERC20")
         payable
     {
-        _setupDecimals(decimals);
-        _mint(_msgSender(), initialBalance);
+        // Immutable variables cannot be read during contract creation time
+        // https://github.com/ethereum/solidity/issues/10463
+        require(initialBalance_ <= cap_, "ERC20Capped: cap exceeded");
+        ERC20._mint(_msgSender(), initialBalance_);
+    }
+
+    function decimals() public view virtual override(ERC20, ERC20Decimals) returns (uint8) {
+        return super.decimals();
     }
 
     /**
@@ -40,7 +48,7 @@ contract CommonERC20 is ERC20Capped, ERC20Mintable, ERC20Burnable, Ownable, Serv
      * @param account The address that will receive the minted tokens
      * @param amount The amount of tokens to mint
      */
-    function _mint(address account, uint256 amount) internal override onlyOwner {
+    function _mint(address account, uint256 amount) internal override(ERC20, ERC20Capped) onlyOwner {
         super._mint(account, amount);
     }
 
@@ -51,12 +59,5 @@ contract CommonERC20 is ERC20Capped, ERC20Mintable, ERC20Burnable, Ownable, Serv
      */
     function _finishMinting() internal override onlyOwner {
         super._finishMinting();
-    }
-
-    /**
-     * @dev See {ERC20-_beforeTokenTransfer}. See {ERC20Capped-_beforeTokenTransfer}.
-     */
-    function _beforeTokenTransfer(address from, address to, uint256 amount) internal override(ERC20, ERC20Capped) {
-        super._beforeTokenTransfer(from, to, amount);
     }
 }
