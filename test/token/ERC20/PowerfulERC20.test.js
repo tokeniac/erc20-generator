@@ -45,6 +45,24 @@ contract('PowerfulERC20', function ([owner, other, thirdParty]) {
           'ERC20Capped: cap is 0',
         );
       });
+
+      it('cannot mint more than cap', async function () {
+        await expectRevert(
+          PowerfulERC20.new(
+            _name,
+            _symbol,
+            _decimals,
+            _cap,
+            _cap.addn(1),
+            this.serviceReceiver.address,
+            {
+              from: owner,
+              value: fee,
+            },
+          ),
+          'ERC20Capped: cap exceeded',
+        );
+      });
     });
 
     describe('as a PowerfulERC20', function () {
