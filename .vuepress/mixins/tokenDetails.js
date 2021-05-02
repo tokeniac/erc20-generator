@@ -23,7 +23,7 @@ export default {
         },
         {
           name: 'StandardERC20',
-          version: '4.0.1',
+          version: '5.0.0',
           standard: true,
           verified: true,
           detailed: true,
@@ -38,11 +38,11 @@ export default {
           removeCopyright: true,
           originalPrice: 0.15,
           price: 0.10,
-          gas: 1123801,
+          gas: 879208,
         },
         {
           name: 'BurnableERC20',
-          version: '4.2.0',
+          version: '5.0.0',
           standard: true,
           verified: true,
           detailed: true,
@@ -57,7 +57,7 @@ export default {
           removeCopyright: true,
           originalPrice: 0.20,
           price: 0.20,
-          gas: 1330812,
+          gas: 1044170,
         },
         {
           name: 'MintableERC20',
@@ -156,7 +156,7 @@ export default {
         },
         {
           name: 'PowerfulERC20',
-          version: '4.3.0',
+          version: '5.0.0',
           standard: true,
           verified: true,
           detailed: true,
@@ -171,7 +171,7 @@ export default {
           removeCopyright: true,
           originalPrice: 0.95,
           price: 0.75,
-          gas: 3525945,
+          gas: 2530489,
         },
       ],
     };
