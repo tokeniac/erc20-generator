@@ -5,7 +5,7 @@
 
 |  File Name  |  SHA-1 Hash  |
 |-------------|--------------|
-| dist/SimpleERC20.dist.sol | 40952c72591714df9f706da7b057f6ea8bff2398 |
+| dist/SimpleERC20.dist.sol | 516d12adc5cdfbfc52d56bbc6069ae80a78623fb |
 
 
 ### Contracts Description Table

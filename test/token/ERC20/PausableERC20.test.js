@@ -3,6 +3,7 @@ const { BN, ether, expectRevert } = require('@openzeppelin/test-helpers');
 const { shouldBehaveLikeOwnable } = require('eth-token-recover/test/access/Ownable.behavior');
 
 const { shouldBehaveLikeERC20 } = require('./behaviours/ERC20.behaviour');
+const { shouldBehaveLikeERC20Burnable } = require('./behaviours/ERC20Burnable.behaviour');
 const { shouldBehaveLikeERC20Pausable } = require('./behaviours/ERC20Pausable.behaviour');
 
 const PausableERC20 = artifacts.require('PausableERC20');
@@ -89,6 +90,10 @@ contract('PausableERC20', function ([owner, other, thirdParty]) {
       shouldBehaveLikeERC20(_name, _symbol, _decimals, _initialSupply, [owner, other, thirdParty]);
     });
 
+    context('like a ERC20Burnable', function () {
+      shouldBehaveLikeERC20Burnable(_initialSupply, [owner, thirdParty]);
+    });
+
     context('like a ERC20Pausable', function () {
       shouldBehaveLikeERC20Pausable(_initialSupply, [owner, other, thirdParty]);
     });
@@ -112,6 +117,26 @@ contract('PausableERC20', function ([owner, other, thirdParty]) {
             'Ownable: caller is not the owner',
           );
         });
+      });
+
+      it('cannot burn while paused', async function () {
+        await this.token.pause({ from: owner });
+
+        await expectRevert(
+          this.token.burn(_initialSupply, { from: owner }),
+          'ERC20Pausable: token transfer while paused',
+        );
+      });
+
+      it('cannot burnFrom while paused', async function () {
+        await this.token.pause({ from: owner });
+
+        await this.token.approve(thirdParty, _initialSupply, { from: owner });
+
+        await expectRevert(
+          this.token.burnFrom(owner, _initialSupply, { from: thirdParty }),
+          'ERC20Pausable: token transfer while paused',
+        );
       });
     });
 

@@ -3,6 +3,7 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
 
 import "./behaviours/ERC20Decimals.sol";
@@ -12,7 +13,7 @@ import "../../service/ServicePayer.sol";
  * @title PausableERC20
  * @dev Implementation of the PausableERC20
  */
-contract PausableERC20 is ERC20Decimals, ERC20Pausable, Ownable, ServicePayer {
+contract PausableERC20 is ERC20Decimals, ERC20Burnable, ERC20Pausable, Ownable, ServicePayer {
 
     constructor (
         string memory name_,

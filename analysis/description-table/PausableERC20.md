@@ -5,7 +5,7 @@
 
 |  File Name  |  SHA-1 Hash  |
 |-------------|--------------|
-| dist/PausableERC20.dist.sol | 40578f15498091027d7350fb1d0bcd98b295e45a |
+| dist/PausableERC20.dist.sol | 393336a2ac27f6e0edee82fc614f10df769ce978 |
 
 
 ### Contracts Description Table
@@ -57,6 +57,10 @@
 | └ | _approve | Internal 🔒 | 🛑  | |
 | └ | _beforeTokenTransfer | Internal 🔒 | 🛑  | |
 ||||||
+| **ERC20Burnable** | Implementation | Context, ERC20 |||
+| └ | burn | Public ❗️ | 🛑  |NO❗️ |
+| └ | burnFrom | Public ❗️ | 🛑  |NO❗️ |
+||||||
 | **Pausable** | Implementation | Context |||
 | └ | <Constructor> | Public ❗️ | 🛑  |NO❗️ |
 | └ | paused | Public ❗️ |   |NO❗️ |
@@ -76,7 +80,7 @@
 | **ServicePayer** | Implementation |  |||
 | └ | <Constructor> | Public ❗️ |  💵 |NO❗️ |
 ||||||
-| **PausableERC20** | Implementation | ERC20Decimals, ERC20Pausable, Ownable, ServicePayer |||
+| **PausableERC20** | Implementation | ERC20Decimals, ERC20Burnable, ERC20Pausable, Ownable, ServicePayer |||
 | └ | <Constructor> | Public ❗️ |  💵 | ERC20 ERC20Decimals ServicePayer |
 | └ | pause | External ❗️ | 🛑  | onlyOwner |
 | └ | unpause | External ❗️ | 🛑  | onlyOwner |

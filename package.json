@@ -1,6 +1,6 @@
 {
   "name": "erc20-generator",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "The most used Smart Contract Generator for ERC20 Token.",
   "files": [
     "contracts",
@@ -72,7 +72,7 @@
     "solhint": "^3.3.4",
     "solidity-coverage": "^0.7.16",
     "surya": "^0.4.2",
-    "truffle": "^5.3.4",
+    "truffle": "^5.3.5",
     "truffle-flattener": "^1.5.0"
   },
   "dependencies": {
