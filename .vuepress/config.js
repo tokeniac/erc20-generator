@@ -27,6 +27,6 @@ module.exports = {
     ],
   ],
   defaultNetwork: 'mainnet',
-  infuraProjectId: '12ca5f4d25964a428951747cf4cd5660',
-  etherscanApiKey: 'JAF9G8Z6CKRK7G941U4AGSEN34Q5YZFXMG',
+  infuraProjectId: '21595bdef1fe47849b52d5e5ffdef016',
+  etherscanApiKey: '5EKRJ6HV9VD8FHUB3NYDXVCR7JMV81RDU9',
 };
