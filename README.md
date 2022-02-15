@@ -10,7 +10,7 @@ Easily deploy Smart Contract for a Standard, Capped, Mintable, Burnable, Payable
 
 ## Smart Contracts Source
  
-Discover Smart Contracts source [here](https://github.com/vittominacori/erc20-generator).
+Discover Smart Contracts source [here](https://github.com/tokencenter/erc20-generator).
 
 ## Install dependencies
 
@@ -44,4 +44,4 @@ npm run deploy
 
 ## License
 
-Code released under the [MIT License](https://github.com/vittominacori/erc20-generator/blob/master/LICENSE).
+Code released under the [MIT License](https://github.com/tokencenter/erc20-generator/blob/master/LICENSE).

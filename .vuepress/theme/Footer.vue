@@ -41,8 +41,8 @@
                     <b-list-group-item>
                         <small>
                             created by
-                            <b-link class="text-warning" href="https://vittominacori.github.io/" target="_blank">
-                                vittominacori
+                            <b-link class="text-warning" href="https://tokencenter.github.io/" target="_blank">
+                                tokencenter
                             </b-link>
                         </small>
                     </b-list-group-item>
@@ -70,7 +70,7 @@
             <b-embed
                     type="iframe"
                     aspect="4by3"
-                    src="https://vittominacori.github.io/erc20-generator-terms/"
+                    src="https://tokencenter.github.io/erc20-generator-terms/"
                     allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
                     allowfullscreen
             ></b-embed>

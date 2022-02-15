@@ -16,7 +16,7 @@
                 <b-nav-item to="/" :active="page === 'Home'">Home</b-nav-item>
                 <b-nav-item to="/docs/" :active="page === 'Docs'">Docs</b-nav-item>
                 <b-nav-item target="_blank"
-                            href="https://vittominacori.medium.com/create-an-erc20-token-in-less-than-a-minute-2a8751c4d6f4">
+                            href="https://tokencenter.medium.com/create-an-erc20-token-in-less-than-a-minute-2a8751c4d6f4">
                     <small>About</small>
                 </b-nav-item>
                 <b-nav-item v-b-modal.modal-feedback><small>Feedback</small></b-nav-item>
