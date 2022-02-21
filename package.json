@@ -36,11 +36,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/tokencenter/erc20-generator.git"
+    "url": "https://github.com/tokeniac/erc20-generator.git"
   },
-  "homepage": "https://tokencenter.github.io/erc20-generator",
+  "homepage": "https://tokeniac.github.io/erc20-generator",
   "bugs": {
-    "url": "https://github.com/tokencenter/erc20-generator/issues"
+    "url": "https://github.com/tokeniac/erc20-generator/issues"
   },
   "author": "Vittorio Minacori",
   "contributors": [
