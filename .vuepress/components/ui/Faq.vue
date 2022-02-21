@@ -177,7 +177,7 @@
                                     TokenRecover allows the contract owner to recover any ERC20 token sent into the
                                     contract for error.
                                 </b-card-text>
-                                <b-link href="https://tokencenter.github.io/eth-token-recover/"
+                                <b-link href="https://tokeniac.github.io/eth-token-recover/"
                                         class="card-link" target="_blank">
                                     Discover Token Recover
                                 </b-link>

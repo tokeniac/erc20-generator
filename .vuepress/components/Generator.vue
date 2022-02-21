@@ -571,7 +571,7 @@
                 .on('receipt', (receipt) => {
                   this.token.address = receipt.contractAddress;
                   this.token.link = this.network.current.etherscanLink + '/token/' + this.token.address;
-                  this.token.widget = `https://tokencenter.github.io/watch-token/create.html?address=${this.token.address}&network=${this.currentNetwork}`;
+                  this.token.widget = `https://tokeniac.github.io/watch-token/create.html?address=${this.token.address}&network=${this.currentNetwork}`;
                   this.$forceUpdate();
                   this.makeToast(
                     'Well done!',
